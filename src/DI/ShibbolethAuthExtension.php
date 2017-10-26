@@ -1,13 +1,12 @@
 <?php
 
-namespace ShibbolethAuthExtension;
-
-use Nette;
+namespace Vojir\ShibbolethAuthExtension\DI;
 
 /**
  * Class ShibbolethAuthExtension
  * @package ShibbolethAuthExtension
  * @author Stanislav Vojíř
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 class ShibbolethAuthExtension extends Nette\DI\CompilerExtension{
 
@@ -20,6 +19,12 @@ class ShibbolethAuthExtension extends Nette\DI\CompilerExtension{
     $configurator->onCompile[] = function ($configurator, $compiler) use ($prefix, $class) {
       $compiler->addExtension($prefix, new $class);
     };
+  }
+
+  public function loadConfiguration(){
+    $container = $this->getContainerBuilder();
+    $container->addDefinition($this->prefix('shibboleth'))
+      ->setClass('Vojir\\ShibbolethAuthenticator\\ShibbolethAuthenticator');
   }
 
 }

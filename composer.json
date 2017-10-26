@@ -1,6 +1,6 @@
 
 {
-	"name": "vojir/nette-shibboleth-auth-extension",
+	"name": "vojir/nette-shibboleth-authenticator",
 	"type": "library",
 	"description": "Simple extension for Shibboleth authentication in Nette projects",
 	"keywords": ["nette", "shibboleth", "authentication"],
@@ -21,8 +21,8 @@
 		"nette/http": "^2.4"
 	},
 	"autoload": {
-		"psr-0": {
-			"Vojir\\ShibbolethAuthExtension\\": "src/"
+		"psr-4": {
+			"Vojir\\ShibbolethAuthenticator\\": "src/"
 		}
 	}
 }
