@@ -1,11 +1,17 @@
 
 {
-	"name": "vojit/nette-shibboleth-auth-extension",
+	"name": "vojir/nette-shibboleth-auth-extension",
 	"type": "library",
 	"description": "Simple extension for Shibboleth authentication in Nette projects",
 	"keywords": ["nette", "shibboleth", "authentication"],
 	"homepage": "https://github.com/vojir/Nette-ShibbolethAuthExtension",
 	"license": "Apache-2.0",
+	"authors": [
+		{
+			"name": "Stanislav Vojíř",
+			"homepage": "https://vojir.net"
+		}
+	],
 	"support": {
 		"issues": "https://github.com/vojir/Nette-ShibbolethAuthExtension/issues"
 	},
@@ -16,7 +22,7 @@
 	},
 	"autoload": {
 		"psr-0": {
-			"ShibbolethAuthExtension": "src/"
+			"Vojir\\ShibbolethAuthExtension\\": "src/"
 		}
 	}
 }
