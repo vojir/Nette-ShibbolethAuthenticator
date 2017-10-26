@@ -16,7 +16,7 @@
 	},
 	"autoload": {
 		"psr-0": {
-			"HttpAuthExtension": "src/"
+			"ShibbolethAuthExtension": "src/"
 		}
 	}
 }
