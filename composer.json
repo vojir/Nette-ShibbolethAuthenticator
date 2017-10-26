@@ -4,7 +4,7 @@
 	"type": "library",
 	"description": "Simple extension for Shibboleth authentication in Nette projects",
 	"keywords": ["nette", "shibboleth", "authentication"],
-	"homepage": "https://github.com/vojir/Nette-ShibbolethAuthExtension",
+	"homepage": "https://github.com/vojir/Nette-ShibbolethAuthenticator",
 	"license": "Apache-2.0",
 	"authors": [
 		{
@@ -13,7 +13,7 @@
 		}
 	],
 	"support": {
-		"issues": "https://github.com/vojir/Nette-ShibbolethAuthExtension/issues"
+		"issues": "https://github.com/vojir/Nette-ShibbolethAuthenticator/issues"
 	},
 	"require": {
 		"php": ">=5.5.0",
