@@ -21,7 +21,10 @@ class ShibbolethAuthenticator{
       'username'=>'',
       'email'=>'',
       'displayName'=>'',
-      'shibSessionId'=>''
+      'shibSessionId'=>'',
+      'givenName'=>'',
+      'familyName'=>'',
+      'personId'=>''
     ]
   ];
 
@@ -81,7 +84,10 @@ class ShibbolethAuthenticator{
         $this->getServerVariable('username'),
         $this->getServerVariable('displayName'),
         $this->getServerVariable('email'),
-        $this->getServerVariable('shibSessionId')
+        $this->getServerVariable('shibSessionId'),
+        $this->getServerVariable('givenName'),
+        $this->getServerVariable('familyName'),
+        $this->getServerVariable('personId')
       );
     }else{
       return null;
