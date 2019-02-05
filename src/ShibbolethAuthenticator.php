@@ -100,7 +100,7 @@ class ShibbolethAuthenticator{
    * @return string|null
    */
   private function getServerVariable($name){
-    if (isset($_SERVER[$this->config['variables'][$name]])){
+    if (isset($this->config['variables'][$name]) && isset($_SERVER[$this->config['variables'][$name]])){
       return $_SERVER[$this->config['variables'][$name]];
     }else{
       return null;
