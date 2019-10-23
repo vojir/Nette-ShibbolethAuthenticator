@@ -16,8 +16,8 @@
 		"issues": "https://github.com/vojir/Nette-ShibbolethAuthenticator/issues"
 	},
 	"require": {
-		"php": ">=5.5.0",
-		"nette/di": "^2.4",
+		"php": ">=7.1.0",
+		"nette/di": "^3.0",
 		"nette/http": "^2.4"
 	},
 	"autoload": {
