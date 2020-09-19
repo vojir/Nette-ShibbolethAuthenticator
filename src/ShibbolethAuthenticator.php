@@ -103,7 +103,7 @@ class ShibbolethAuthenticator{
   private function getServerVariable($name,$returnSingleValue=false){
     if (isset($this->config['variables'][$name]) && isset($_SERVER[$this->config['variables'][$name]])){
       $value=$_SERVER[$this->config['variables'][$name]];
-      if ($returnSingleValue && strpos($value,';'))){
+      if ($returnSingleValue && strpos($value,';')){
         $valueArr=explode(';',trim($value,';'));
         if (is_array($valueArr)){
           $value=array_shift($valueArr);
