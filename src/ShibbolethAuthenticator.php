@@ -83,7 +83,7 @@ class ShibbolethAuthenticator{
       return new ShibbolethUser(
         $this->getServerVariable('username'),
         $this->getServerVariable('displayName'),
-        $this->getServerVariable('email'),
+        $this->getServerVariable('email',true),
         $this->getServerVariable('shibSessionId'),
         $this->getServerVariable('givenName'),
         $this->getServerVariable('familyName'),
@@ -97,11 +97,19 @@ class ShibbolethAuthenticator{
   /**
    * Metoda vracející hodnotu proměnné z $_SERVER dle konfigu tohoto rozšíření
    * @param string $name
+   * @param bool $returnSignleValue = false
    * @return string|null
    */
-  private function getServerVariable($name){
+  private function getServerVariable($name,$returnSingleValue=false){
     if (isset($this->config['variables'][$name]) && isset($_SERVER[$this->config['variables'][$name]])){
-      return $_SERVER[$this->config['variables'][$name]];
+      $value=$_SERVER[$this->config['variables'][$name]];
+      if ($returnSingleValue && strpos($value,';'))){
+        $valueArr=explode(';',trim($value,';'));
+        if (is_array($valueArr)){
+          $value=array_shift($valueArr);
+        }
+      }
+      return $value;
     }else{
       return null;
     }
