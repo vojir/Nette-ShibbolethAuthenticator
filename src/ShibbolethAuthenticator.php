@@ -49,7 +49,7 @@ class ShibbolethAuthenticator{
   public function getLogoutUrl($targetUrl=''){
     $url=$this->config['URLs']['sessionLogout'];
     if ($targetUrl!=''){
-      $url.=(strpos($url,'?')?'&':'?').'result='.$targetUrl;
+      $url.=(strpos($url,'?')?'&':'?').'return='.$targetUrl;
     }
     return $url;
   }
