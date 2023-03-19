@@ -10,7 +10,7 @@ namespace Vojir\ShibbolethAuthenticator;
  */
 class ShibbolethAuthenticator{
 
-  public $config=[
+  public array $config=[
     'URLs'=>[
       'sessionInitiator'=>'',
       'sessionLogout'=>'',
@@ -24,7 +24,10 @@ class ShibbolethAuthenticator{
       'shibSessionId'=>'',
       'givenName'=>'',
       'familyName'=>'',
-      'personId'=>''
+      'personId'=>'',
+      'affiliation'=>'',
+      'affiliationRoles'=>[],
+      'memberOf'=>''
     ]
   ];
 
@@ -33,7 +36,7 @@ class ShibbolethAuthenticator{
    * @param string $targetUrl
    * @return string
    */
-  public function getLoginUrl($targetUrl=''){
+  public function getLoginUrl($targetUrl=''):string{
     $url=$this->config['URLs']['sessionInitiator'];
     if ($targetUrl!=''){
       $url.=(strpos($url,'?')?'&':'?').'target='.$targetUrl;
@@ -46,7 +49,7 @@ class ShibbolethAuthenticator{
    * @param string $targetUrl
    * @return string
    */
-  public function getLogoutUrl($targetUrl=''){
+  public function getLogoutUrl($targetUrl=''):string{
     $url=$this->config['URLs']['sessionLogout'];
     if ($targetUrl!=''){
       $url.=(strpos($url,'?')?'&':'?').'return='.$targetUrl;
@@ -57,28 +60,28 @@ class ShibbolethAuthenticator{
   /**
    * @return string
    */
-  public function getPasswordChangeUrl(){
+  public function getPasswordChangeUrl():string{
     return $this->config['URLs']['passwordChange'];
   }
 
   /**
    * @return string
    */
-  public function getPasswordResetUrl(){
+  public function getPasswordResetUrl():string{
     return $this->config['URLs']['passwordReset'];
   }
 
   /**
    * @return bool
    */
-  public function isLoggedIn(){
+  public function isLoggedIn():bool{
     return ($this->getServerVariable('shibSessionId') && $this->getServerVariable('username'));
   }
 
   /**
    * @return ShibbolethUser|null
    */
-  public function getUser(){
+  public function getUser():?ShibbolethUser{
     if ($this->isLoggedIn()){
       return new ShibbolethUser(
         $this->getServerVariable('username'),
@@ -87,7 +90,9 @@ class ShibbolethAuthenticator{
         $this->getServerVariable('shibSessionId'),
         $this->getServerVariable('givenName'),
         $this->getServerVariable('familyName'),
-        $this->getServerVariable('personId')
+        $this->getServerVariable('personId'),
+        $this->getAffiliationRoles(),
+        (($roles = $this->getServerVariable('memberOf')) ? explode(';', $roles) : [])
       );
     }else{
       return null;
@@ -97,10 +102,10 @@ class ShibbolethAuthenticator{
   /**
    * Metoda vracející hodnotu proměnné z $_SERVER dle konfigu tohoto rozšíření
    * @param string $name
-   * @param bool $returnSignleValue = false
+   * @param bool $returnSingleValue = false
    * @return string|null
    */
-  private function getServerVariable($name,$returnSingleValue=false){
+  private function getServerVariable(string $name,bool $returnSingleValue=false):?string{
     if (isset($this->config['variables'][$name]) && isset($_SERVER[$this->config['variables'][$name]])){
       $value=$_SERVER[$this->config['variables'][$name]];
       if ($returnSingleValue && strpos($value,';')){
@@ -113,5 +118,24 @@ class ShibbolethAuthenticator{
     }else{
       return null;
     }
+  }
+
+  /**
+   * Metoda vracející seznam namapovaných rolí
+   * @return array
+   */
+  private function getAffiliationRoles():array{
+    $result=[];
+    if (!empty($this->config['variables']['affiliationRoles']) && is_array($this->config['variables']['affiliationRoles'])){
+      $affiliationRoles = $this->config['variables']['affiliationRoles'];
+      $affiliation = explode(';', $this->getServerVariable('affiliation') ?? '');
+
+      foreach ($affiliationRoles as $role){
+        if (in_array($role,$affiliation)){
+          $result[]=$role;
+        }
+      }
+    }
+    return $result;
   }
 }

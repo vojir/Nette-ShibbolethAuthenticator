@@ -13,7 +13,7 @@ use Nette\Utils\Validators;
  */
 class ShibbolethAuthExtension extends \Nette\DI\CompilerExtension{
 
-  private $defaults = [
+  private array $defaults = [
     'URLs'=>[
       'sessionInitiator'=>'',
       'sessionLogout'=>'',
@@ -28,7 +28,7 @@ class ShibbolethAuthExtension extends \Nette\DI\CompilerExtension{
     ]
   ];
 
-  public function loadConfiguration(){
+  public function loadConfiguration():void{
     $config=$this->validateConfig($this->defaults);
     Validators::assert($config['URLs']['sessionInitiator'], 'url', 'URLs.sessionInitiator');
     Validators::assert($config['URLs']['sessionLogout'], 'url', 'URLs.sessionLogout');
@@ -43,7 +43,7 @@ class ShibbolethAuthExtension extends \Nette\DI\CompilerExtension{
       ->addSetup('$config',[$config]);
   }
 
-  public static function register(\Nette\Configurator $configurator){
+  public static function register(\Nette\Configurator $configurator):void{
     $configurator->onCompile[] = function ($config, \Nette\DI\Compiler $compiler) {
       $compiler->addExtension('shibboleth', new ShibbolethAuthExtension());
     };
