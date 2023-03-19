@@ -130,8 +130,8 @@ class ShibbolethAuthenticator{
       $affiliationRoles = $this->config['variables']['affiliationRoles'];
       $affiliation = explode(';', $this->getServerVariable('affiliation') ?? '');
 
-      foreach ($affiliationRoles as $role){
-        if (in_array($role,$affiliation)){
+      foreach ($affiliationRoles as $role=>$affiliationRole){
+        if (in_array($affiliationRole,$affiliation)){
           $result[]=$role;
         }
       }
