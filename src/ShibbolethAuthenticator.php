@@ -84,13 +84,13 @@ class ShibbolethAuthenticator{
   public function getUser():?ShibbolethUser{
     if ($this->isLoggedIn()){
       return new ShibbolethUser(
-        $this->getServerVariable('username'),
-        $this->getServerVariable('displayName'),
-        $this->getServerVariable('email',true),
+        $this->getServerVariable('username') ?? '',
+        $this->getServerVariable('displayName') ?? '',
+        $this->getServerVariable('email',true) ?? '',
         $this->getServerVariable('shibSessionId'),
-        $this->getServerVariable('givenName'),
-        $this->getServerVariable('familyName'),
-        $this->getServerVariable('personId'),
+        $this->getServerVariable('givenName') ?? '',
+        $this->getServerVariable('familyName') ?? '',
+        $this->getServerVariable('personId') ?? '',
         $this->getAffiliationRoles(),
         (($roles = $this->getServerVariable('memberOf')) ? explode(';', $roles) : [])
       );
