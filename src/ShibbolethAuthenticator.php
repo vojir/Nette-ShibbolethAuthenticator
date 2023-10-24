@@ -39,7 +39,7 @@ class ShibbolethAuthenticator{
   public function getLoginUrl($targetUrl=''):string{
     $url=$this->config['URLs']['sessionInitiator'];
     if ($targetUrl!=''){
-      $url.=(strpos($url,'?')?'&':'?').'target='.$targetUrl;
+      $url.=(strpos($url,'?')?'&':'?').'target='.urlencode($targetUrl);
     }
     return $url;
   }
@@ -52,7 +52,7 @@ class ShibbolethAuthenticator{
   public function getLogoutUrl($targetUrl=''):string{
     $url=$this->config['URLs']['sessionLogout'];
     if ($targetUrl!=''){
-      $url.=(strpos($url,'?')?'&':'?').'return='.$targetUrl;
+      $url.=(strpos($url,'?')?'&':'?').'return='.urlencode($targetUrl);
     }
     return $url;
   }
